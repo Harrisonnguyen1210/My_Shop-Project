@@ -1,9 +1,19 @@
 import React, {Component} from 'react';
-import {View, Text, Image, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    Dimensions,
+    TouchableOpacity,
+    FlatList,
+} from 'react-native';
+import ProductItem from '../list_product/product_item';
 
 const {height, width} = Dimensions.get('window');
-const productWidth = (width -50)/2;
-const productHeight = productWidth/560*840;
+const productWidth = (width - 50) / 2;
+const productHeight = productWidth / 560 * 840;
+const url = 'http://192.168.0.3/app/images/product';
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -17,14 +27,12 @@ const styles = StyleSheet.create({
     titleContainer: {
         height: 50,
         justifyContent: 'center',
-        paddingLeft: 10
+        paddingLeft: 10,
     },
     title: {
-        fontSize: 20
+        fontSize: 20,
     },
     body: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
         justifyContent: 'space-around'
     },
     productContainer: {
@@ -38,24 +46,24 @@ const styles = StyleSheet.create({
     },
     productImage: {
         width: productWidth,
-        height: productHeight
+        height: productHeight,
     },
     productInfo: {
-        padding: 10
+        padding: 10,
     },
     productName: {
-        color: '#000000'
+        color: '#000000',
     },
     productPrice: {
-        color: '#000000'
-    }
+        color: '#000000',
+    },
 
 });
 
 export default class Top_Product extends Component {
 
-    goToProductDetail = () => {
-      this.props.navigator.navigate('ProductDetail');
+    goToProductDetail = (product) => {
+        this.props.navigator.navigate('ProductDetail', {product: product});
     };
 
     render() {
@@ -64,40 +72,28 @@ export default class Top_Product extends Component {
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>TOP PRODUCT</Text>
                 </View>
-                <View style={styles.body}>
-                    <TouchableOpacity style={styles.productContainer} onPress={this.goToProductDetail}>
-                        <Image style={styles.productImage} source={require(
-                            '../../../../media/pic/product1.jpg')}/>
-                        <View style={styles.productInfo}>
-                            <Text style={styles.productName}>PRODUCT NAME</Text>
-                            <Text style={styles.productPrice}>PRODUCT PRICE</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.productContainer} onPress={this.goToProductDetail}>
-                        <Image style={styles.productImage} source={require(
-                            '../../../../media/pic/product2.jpeg')}/>
-                        <View style={styles.productInfo}>
-                            <Text style={styles.productName}>PRODUCT NAME</Text>
-                            <Text style={styles.productPrice}>PRODUCT PRICE</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.productContainer} onPress={this.goToProductDetail}>
-                        <Image style={styles.productImage} source={require(
-                            '../../../../media/pic/product3.jpg')}/>
-                        <View style={styles.productInfo}>
-                            <Text style={styles.productName}>PRODUCT NAME</Text>
-                            <Text style={styles.productPrice}>PRODUCT PRICE</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.productContainer} onPress={this.goToProductDetail}>
-                        <Image style={styles.productImage} source={require(
-                            '../../../../media/pic/product4.jpg')}/>
-                        <View style={styles.productInfo}>
-                            <Text style={styles.productName}>PRODUCT NAME</Text>
-                            <Text style={styles.productPrice}>PRODUCT PRICE</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                <FlatList
+                    data={this.props.products}
+                    keyExtractor={(item, index) => index.toString()}
+                    numColumns={2}
+                    columnWrapperStyle={styles.body}
+                    renderItem={({item}) =>
+                        (
+                            <TouchableOpacity key={item.id}
+                                              style={styles.productContainer}
+                                              onPress={() => this.goToProductDetail(item)}>
+                                <Image style={styles.productImage}
+                                       source={{uri: `${url}/${item.images[0]}`}}/>
+                                <View style={styles.productInfo}>
+                                    <Text
+                                        style={styles.productName}>{item.name.toUpperCase()}</Text>
+                                    <Text
+                                        style={styles.productPrice}>{item.price}$</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    }
+                />
             </View>
         );
     }

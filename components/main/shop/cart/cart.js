@@ -20,7 +20,7 @@ export default class Cart extends Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <CartContainer/>
+                <CartContainer screenProps={this.props.cartArray}/>
             </View>
         );
     }

@@ -6,6 +6,7 @@ import Contact from './contact/contact';
 import Cart from './cart/cart';
 import Search from './search/search';
 import Header from './header'
+import Global from '../../global';
 
 export default class Shop extends Component {
 
@@ -13,8 +14,14 @@ export default class Shop extends Component {
         super(props);
         this.state = {
             selectedTab: 'home',
+            cartArray: []
         };
+        Global.addProductToCart = this.addProductToCart
     }
+
+    addProductToCart = (product) => {
+        this.setState({cartArray: this.state.cartArray.concat({product: product, quantity: 1})})
+    };
 
     openMenu = () => {
         const {open} = this.props;
@@ -22,6 +29,7 @@ export default class Shop extends Component {
     };
 
     render() {
+
         return (
             <View style={{flex: 1}}>
                 <Header onOpen={this.openMenu}/>
@@ -31,7 +39,6 @@ export default class Shop extends Component {
                         selected={this.state.selectedTab === 'home'}
                         title="Home"
                         renderIcon={() => <Image source={require('../../../media/app_Icon/ic_home.png')} />}
-                        // renderSelectedIcon={() => <Image source={...} />}
                         onPress={() => this.setState({selectedTab: 'home'})}>
                         <Home/>
                     </TabNavigator.Item>
@@ -39,9 +46,9 @@ export default class Shop extends Component {
                         selected={this.state.selectedTab === 'cart'}
                         title="Cart"
                         renderIcon={() => <Image source={require('../../../media/app_Icon/ic_cart.png')} />}
-                        // badgeText="1"
+                        badgeText={this.state.cartArray.length}
                         onPress={() => this.setState({selectedTab: 'cart'})}>
-                        <Cart/>
+                        <Cart cartArray={this.state.cartArray}/>
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'search'}
