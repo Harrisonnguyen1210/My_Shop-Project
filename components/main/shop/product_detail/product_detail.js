@@ -133,9 +133,6 @@ export default class ProductDetail extends Component {
 
         return (
             <View style={wrapper}>
-                {console.log('lol------------')}
-
-                {console.log(this.props.screenProps)}
                 <View style={cardStyle}>
                     <View style={header}>
                         <TouchableOpacity onPress={() => this.props.navigation.goBack()}>

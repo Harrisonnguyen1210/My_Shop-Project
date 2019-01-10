@@ -153,8 +153,7 @@ export default class CartView extends Component {
                 >
                 </FlatList>
                 <TouchableOpacity style={checkoutButton}>
-                    <Text style={checkoutTitle}>TOTAL {1000}$ CHECKOUT
-                        NOW</Text>
+                    <Text style={checkoutTitle}>TOTAL {1000}$ CHECKOUT NOW</Text>
                 </TouchableOpacity>
             </View>
         );

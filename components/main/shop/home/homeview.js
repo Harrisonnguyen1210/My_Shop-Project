@@ -3,6 +3,7 @@ import {ScrollView} from 'react-native';
 import Collection from './collection';
 import Category from './category';
 import Top_Product from './top_product';
+import getData from '../../../../api/initData';
 
 export default class HomeView extends Component {
 
@@ -15,9 +16,7 @@ export default class HomeView extends Component {
     }
 
     componentDidMount = () => {
-        fetch('http://192.168.0.3/app/index.php').
-            then(response => response.json()).
-            then(json => this.setState({types: json.type, products: json.product}));
+        getData().then(json => this.setState({types: json.type, products: json.product}));
     };
 
     render() {
