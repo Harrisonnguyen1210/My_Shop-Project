@@ -3,9 +3,7 @@ import {
     View, Text, TouchableOpacity, ScrollView,
     Dimensions, StyleSheet, Image, FlatList,
 } from 'react-native';
-
-import sp1 from '../../.././../media/pic/product1.jpg';
-import ProductItem from '../list_product/product_item';
+import Global from '../../../global';
 
 const {width} = Dimensions.get('window');
 const imageWidth = width / 4;
@@ -101,6 +99,19 @@ export default class CartView extends Component {
         this.props.navigation.navigate('ProductDetail', {product: product});
     };
 
+    increaseQuan = (productID) => {
+        Global.increaseQuan(productID);
+    };
+
+    decreaseQuan = (productID) => {
+        Global.decreaseQuan(productID);
+
+    };
+
+    removeProduct = (productID) => {
+        Global.removeProduct(productID);
+    };
+
     render() {
         const {
             main, checkoutButton, checkoutTitle, wrapper,
@@ -108,13 +119,20 @@ export default class CartView extends Component {
             txtName, txtPrice, productImage, numberOfProduct,
             txtShowDetail, showDetailContainer,
         } = styles;
+        const cartArray = this.props.screenProps;
+        const arrTotal = cartArray.map(item => {
+            return item.product.price*item.quantity;
+        });
+        // calculate value for total money
+        const total = arrTotal.length > 0 ? arrTotal.reduce((accumulator, currentValue) => accumulator + currentValue) : 0;
         return (
             <View style={wrapper}>
                 <FlatList style={main}
                           keyExtractor={(item, index) => index.toString()}
-                          data={this.props.screenProps}
+                          data={cartArray}
                           renderItem={({item}) => (
                               <View style={product}>
+                                  {console.log(item.product.id)}
                                   <Image source={{uri: `${url}/${item.product.images[0]}`}} style={productImage}/>
                                   <View style={[mainRight]}>
                                       <View style={{
@@ -122,7 +140,7 @@ export default class CartView extends Component {
                                           flexDirection: 'row',
                                       }}>
                                           <Text style={txtName}>{toTitleCase(item.product.name)}</Text>
-                                          <TouchableOpacity>
+                                          <TouchableOpacity onPress={() => {this.removeProduct(item.product.id)}}>
                                               <Text style={{
                                                   fontFamily: 'Avenir',
                                                   color: '#969696',
@@ -134,11 +152,11 @@ export default class CartView extends Component {
                                       </View>
                                       <View style={productController}>
                                           <View style={numberOfProduct}>
-                                              <TouchableOpacity>
+                                              <TouchableOpacity onPress={() => {this.increaseQuan(item.product.id)}}>
                                                   <Text>+</Text>
                                               </TouchableOpacity>
                                               <Text>{item.quantity}</Text>
-                                              <TouchableOpacity>
+                                              <TouchableOpacity onPress={() => {this.decreaseQuan(item.product.id)}}>
                                                   <Text>-</Text>
                                               </TouchableOpacity>
                                           </View>
@@ -153,7 +171,7 @@ export default class CartView extends Component {
                 >
                 </FlatList>
                 <TouchableOpacity style={checkoutButton}>
-                    <Text style={checkoutTitle}>TOTAL {1000}$ CHECKOUT NOW</Text>
+                    <Text style={checkoutTitle}>TOTAL {total}$ CHECKOUT NOW</Text>
                 </TouchableOpacity>
             </View>
         );

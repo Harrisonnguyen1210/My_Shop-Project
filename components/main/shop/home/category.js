@@ -66,19 +66,6 @@ export default class Collection extends Component {
                                 </ImageBackground>
                             </TouchableOpacity>
                         ))}
-                        {/*{console.log(this.state.types)}*/}
-                        {/*<TouchableOpacity style={styles.touchableImg} onPress={this.goToListProduct}>*/}
-                        {/*<Image style={styles.image} source={require(*/}
-                        {/*'../../../../media/pic/maxi.jpg')}/>*/}
-                        {/*</TouchableOpacity>*/}
-                        {/*<TouchableOpacity style={styles.touchableImg} onPress={this.goToListProduct}>*/}
-                        {/*<Image style={styles.image} source={require(*/}
-                        {/*'../../../../media/pic/party.jpg')}/>*/}
-                        {/*</TouchableOpacity>*/}
-                        {/*<TouchableOpacity style={styles.touchableImg} onPress={this.goToListProduct}>*/}
-                        {/*<Image style={styles.image} source={require(*/}
-                        {/*'../../../../media/pic/gucci.jpeg')}/>*/}
-                        {/*</TouchableOpacity>*/}
                     </Swiper>
                 </View>
             </View>

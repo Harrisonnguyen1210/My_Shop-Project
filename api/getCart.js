@@ -1,6 +1,6 @@
 import { AsyncStorage } from "react-native";
 
-const getCart = async () => {
+const GetCart = async () => {
     try {
         const cartArray = await AsyncStorage.getItem('carts');
         if (cartArray !== null) {
@@ -17,4 +17,4 @@ const getCart = async () => {
     }
 };
 
-export default getCart
+export default GetCart

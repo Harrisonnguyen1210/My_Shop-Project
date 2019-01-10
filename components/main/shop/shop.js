@@ -19,28 +19,63 @@ export default class Shop extends Component {
             cartArray: [],
         };
         Global.addProductToCart = this.addProductToCart;
+        Global.increaseQuan = this.increaseQuan;
+        Global.decreaseQuan = this.decreaseQuan;
+        Global.removeProduct = this.removeProduct;
     }
 
+    // get cart data from asyncStorage
     componentDidMount = () => {
         GetCart().then((cartArray) => {
             this.setState({cartArray: cartArray});
         });
     };
 
+    // func for adding product to cart then saving cart data to asyncStorage
     addProductToCart = (product) => {
         this.setState(
-            { cartArray: this.state.cartArray.concat({ product, quantity: 1 }) },
+            { cartArray: this.state.cartArray.concat({ product: product, quantity: 1 }) },
             () => SaveCart(this.state.cartArray)
         );
     };
 
+    // func for increasing quantity of product in cart
+    increaseQuan = (productId) => {
+        const newCart = this.state.cartArray.map(item => {
+            if (item.product.id !== productId) return item;
+            return { product: item.product, quantity: item.quantity + 1 };
+        });
+        this.setState({ cartArray: newCart },
+            () => SaveCart(this.state.cartArray)
+        );
+    };
+
+    // func for decreasing quantity of product in cart
+    decreaseQuan = (productId) => {
+        const newCart = this.state.cartArray.map(item => {
+            if (item.product.id !== productId) return item;
+            return { product: item.product, quantity: item.quantity - 1 };
+        });
+        this.setState({ cartArray: newCart },
+            () => SaveCart(this.state.cartArray)
+        );
+    };
+
+    // func for removing product in cart
+    removeProduct = (productId) => {
+        const newCart = this.state.cartArray.filter(item => item.product.id !== productId);
+        this.setState({ cartArray: newCart },
+            () => SaveCart(this.state.cartArray)
+        );
+    };
+
+    // func for opening menu drawer, getting open prop from main.js
     openMenu = () => {
         const {open} = this.props;
         open();
     };
 
     render() {
-
         return (
             <View style={{flex: 1}}>
                 <Header onOpen={this.openMenu}/>

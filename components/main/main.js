@@ -9,6 +9,8 @@ export default class Main extends Component{
     closeControlPanel = () => {
         this.drawer.close()
     };
+
+    // func for opening menu drawer
     openControlPanel = () => {
         this.drawer.open()
     };
