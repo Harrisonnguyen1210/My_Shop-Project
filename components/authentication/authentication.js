@@ -1,15 +1,7 @@
 import React, {Component} from 'react';
-import {
-    View,
-    TextInput,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-    Image,
-    Dimensions,
-} from 'react-native';
-
-const {height} = Dimensions.get('window');
+import {View, TextInput, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import SignIn from './signin';
+import SignUp from './signup';
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -36,20 +28,6 @@ const styles = StyleSheet.create({
         width: 40,
         backgroundColor: 'white',
         borderRadius: 20,
-    },
-    body: {
-        height: '80%',
-        backgroundColor: 'red',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    inputText: {
-        width: '60%',
-        minHeight: 50,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        marginBottom: 10,
-        paddingLeft: 10,
     },
     footer: {
         height: '10%',
@@ -84,38 +62,15 @@ export default class Authentication extends Component {
         }
     }
 
+    goToSignIn = () => {
+        this.setState({
+            isSignIn: true
+        });
+    };
+
     render() {
-        const signInJSX = (
-            <View style={styles.body}>
-                <TextInput style={styles.inputText}
-                           placeholder={'Enter your email'}/>
-                <TextInput style={styles.inputText}
-                           placeholder={'Enter your password'}/>
 
-
-                <TouchableOpacity>
-                    <Text>SIGN IN</Text>
-                </TouchableOpacity>
-            </View>
-        );
-
-        const signUpJSX = (
-            <View style={styles.body}>
-                <TextInput style={styles.inputText}
-                           placeholder={'Enter your name'}/>
-                <TextInput style={styles.inputText}
-                           placeholder={'Enter your email'}/>
-                <TextInput style={styles.inputText}
-                           placeholder={'Enter your password'}/>
-                <TextInput style={styles.inputText}
-                           placeholder={'Re-Enter your password'}/>
-                <TouchableOpacity>
-                    <Text>SIGN UP</Text>
-                </TouchableOpacity>
-            </View>
-        );
-
-        const mainJSX = this.state.isSignIn ? signInJSX: signUpJSX;
+        const mainJSX = this.state.isSignIn ? <SignIn goBack={() => this.props.navigation.goBack()}/>: <SignUp goToSignIn={this.goToSignIn}/>;
 
         return (
             <View style={styles.wrapper}>

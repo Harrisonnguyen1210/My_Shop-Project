@@ -1,15 +1,25 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-    View, TouchableOpacity, Text, Image, StyleSheet, TextInput
+    View, TouchableOpacity, Text, Image, StyleSheet, TextInput, Alert,
 } from 'react-native';
 import backSpecial from '../../media/app_Icon/ic_back.png';
+import GetToken from '../../api/getToken';
+import ChangeInfoAPI from '../../api/changeInfo';
+import Global from '../global';
 
 const styles = StyleSheet.create({
-    wrapper: { flex: 1, backgroundColor: '#fff' },
-    header: { flex: 1, backgroundColor: '#2ABB9C', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 10 },// eslint-disable-line
-    headerTitle: { fontFamily: 'Avenir', color: '#fff', fontSize: 20 },
-    backIconStyle: { width: 30, height: 30 },
-    body: { flex: 10, backgroundColor: '#F6F6F6', justifyContent: 'center' },
+    wrapper: {flex: 1, backgroundColor: '#fff'},
+    header: {
+        flex: 1,
+        backgroundColor: '#2ABB9C',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        paddingHorizontal: 10,
+    },// eslint-disable-line
+    headerTitle: {fontFamily: 'Avenir', color: '#fff', fontSize: 20},
+    backIconStyle: {width: 30, height: 30},
+    body: {flex: 10, backgroundColor: '#F6F6F6', justifyContent: 'center'},
     textInput: {
         height: 45,
         marginHorizontal: 20,
@@ -19,10 +29,13 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginBottom: 20,
         borderColor: '#2ABB9C',
-        borderWidth: 1
+        borderWidth: 1,
     },
     signInTextStyle: {
-        color: '#FFF', fontFamily: 'Avenir', fontWeight: '600', paddingHorizontal: 20
+        color: '#FFF',
+        fontFamily: 'Avenir',
+        fontWeight: '600',
+        paddingHorizontal: 20,
     },
     signInContainer: {
         marginHorizontal: 20,
@@ -31,37 +44,64 @@ const styles = StyleSheet.create({
         height: 45,
         alignItems: 'center',
         justifyContent: 'center',
-        alignSelf: 'stretch'
+        alignSelf: 'stretch',
     },
     signInStyle: {
         flex: 3,
-        marginTop: 50
-    }
+        marginTop: 50,
+    },
 });
 
 export default class ChangeInfo extends Component {
     constructor(props) {
         super(props);
+        const {name, address, phone} = this.props.navigation.getParam('user');
         this.state = {
-            txtName: 'Nguyen Van Pho',
-            txtAddress: '92 Le Thi Rieng / Ben Thanh',
-            txtPhone: '01694472176'
+            txtName: name,
+            txtAddress: address,
+            txtPhone: phone,
         };
     }
+
+    changeInfo = () => {
+        GetToken()
+        .then(token => {
+            ChangeInfoAPI(token, this.state.txtName, this.state.txtPhone, this.state.txtAddress)
+            .then((user) => {
+                console.log('dfsgdhfsd');
+                console.log(user);
+                this.alertSuccess();
+                Global.signUserIn(user);
+            });
+        })
+        .catch(err => console.log(err));
+    };
+
+    alertSuccess = () => {
+        Alert.alert(
+            'Notice',
+            'Change info successfully',
+            [
+                {text: 'OK', onPress: () => this.props.navigation.goBack()},
+            ],
+            {cancelable: false},
+        );
+    };
 
     render() {
         const {
             wrapper, header, headerTitle, backIconStyle, body,
-            signInContainer, signInTextStyle, textInput
+            signInContainer, signInTextStyle, textInput,
         } = styles;
-        const { name, address, phone } = this.state;
+        const {txtName, txtAddress, txtPhone} = this.state;
         return (
             <View style={wrapper}>
                 <View style={header}>
-                    <View />
+                    <View/>
                     <Text style={headerTitle}>User Information</Text>
-                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                        <Image source={backSpecial} style={backIconStyle} />
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.goBack()}>
+                        <Image source={backSpecial} style={backIconStyle}/>
                     </TouchableOpacity>
                 </View>
                 <View style={body}>
@@ -69,25 +109,30 @@ export default class ChangeInfo extends Component {
                         style={textInput}
                         placeholder="Enter your name"
                         autoCapitalize="none"
-                        value={name}
-                        onChangeText={txtName => this.setState({ ...this.state, txtName })}
+                        value={txtName}
+                        onChangeText={txtName => this.setState(
+                            {...this.state, txtName})}
                     />
                     <TextInput
                         style={textInput}
                         placeholder="Enter your address"
                         autoCapitalize="none"
-                        value={address}
-                        onChangeText={txtAddress => this.setState({ ...this.state, txtAddress })}
+                        value={txtAddress}
+                        onChangeText={txtAddress => this.setState(
+                            {...this.state, txtAddress})}
                     />
                     <TextInput
                         style={textInput}
                         placeholder="Enter your phone number"
                         autoCapitalize="none"
-                        value={phone}
-                        onChangeText={txtPhone => this.setState({ ...this.state, txtPhone })}
+                        value={txtPhone}
+                        onChangeText={txtPhone => this.setState(
+                            {...this.state, txtPhone})}
                     />
-                    <TouchableOpacity style={signInContainer}>
-                        <Text style={signInTextStyle}>CHANGE YOUR INFORMATION</Text>
+                    <TouchableOpacity style={signInContainer}
+                                      onPress={this.changeInfo}>
+                        <Text style={signInTextStyle}>CHANGE YOUR
+                            INFORMATION</Text>
                     </TouchableOpacity>
                 </View>
             </View>

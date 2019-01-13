@@ -13,7 +13,8 @@ const GetCart = async () => {
             return []
         }
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        return [];
     }
 };
 
