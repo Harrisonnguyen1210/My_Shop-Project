@@ -88,6 +88,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
 });
+
+// func to capitalize every first letter of each words
 const toTitleCase = (str) => {
     return str.replace(/\w\S*/g,
         txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());

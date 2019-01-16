@@ -9,6 +9,8 @@ import {
     StyleSheet,
 } from 'react-native';
 import icMenu from '../../../media/app_Icon/ic_menu.png';
+import Global from '../../global';
+import Search from '../../../api/searchProduct';
 
 const {height} = Dimensions.get('window');
 
@@ -39,6 +41,20 @@ const styles = StyleSheet.create({
 });
 
 export default class Header extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            txtSearch: ''
+        }
+    }
+
+    onSearch = () => {
+        Search(this.state.txtSearch).then(arrayProduct => {
+            console.log(arrayProduct);
+            Global.setSearchArray(arrayProduct);
+        }).catch(err => console.log(err))
+    };
+
     render() {
         return (
             <View style={styles.wrapper}>
@@ -51,6 +67,10 @@ export default class Header extends Component {
                 <TextInput
                     style={styles.textInput}
                     placeholder="What do you want to buy ?"
+                    value={this.state.txtSearch}
+                    onChangeText={text => this.setState({txtSearch: text})}
+                    onFocus={Global.goToSearch}
+                    onSubmitEditing={this.onSearch}
                 />
             </View>
         );

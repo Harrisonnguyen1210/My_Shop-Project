@@ -22,6 +22,7 @@ export default class Shop extends Component {
         Global.increaseQuan = this.increaseQuan;
         Global.decreaseQuan = this.decreaseQuan;
         Global.removeProduct = this.removeProduct;
+        Global.goToSearch = this.goToSearch;
     }
 
     // get cart data from asyncStorage
@@ -31,8 +32,17 @@ export default class Shop extends Component {
         });
     };
 
+    // when search inputText is focused, move to search Tab
+    goToSearch = () => {
+        this.setState({
+            selectedTab: 'search'
+        })
+    };
+
     // func for adding product to cart then saving cart data to asyncStorage
     addProductToCart = (product) => {
+        const isExist = this.state.cartArray.some(item => item.product.id === product.id);
+        if(isExist) return;
         this.setState(
             { cartArray: this.state.cartArray.concat({ product: product, quantity: 1 }) },
             () => SaveCart(this.state.cartArray)

@@ -3,5 +3,7 @@ module.exports = {
     increaseQuan: null,
     decreaseQuan: null,
     removeProduct: null,
-    signUserIn: null
+    signUserIn: null,
+    goToSearch: null,
+    setSearchArray: null
 };

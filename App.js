@@ -9,11 +9,11 @@
 import React, {Component} from 'react';
 import {Animated, Easing, View, Platform} from 'react-native';
 import {createAppContainer, createStackNavigator} from 'react-navigation';
-
 import Authentication from './components/authentication/authentication';
 import Change_Info from './components/change_info/change_info';
 import Main from './components/main/main';
 import Order_History from './components/order_history/order-history';
+import RefreshToken from './api/refreshToken';
 
 const TransitionConfiguration = () => {
     return {
@@ -80,6 +80,11 @@ const AppNavigator = createStackNavigator({
 const AppContainer = createAppContainer(AppNavigator);
 
 export default class App extends Component {
+    // func for refreshing login token after 30s
+    componentDidMount = () => {
+        setInterval(RefreshToken, 30000);
+    };
+
     render() {
         return (
             <View style={{flex: 1}}>

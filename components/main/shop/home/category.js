@@ -45,8 +45,9 @@ const styles = StyleSheet.create({
 
 export default class Collection extends Component {
 
-    goToListProduct = () => {
-        this.props.navigator.navigate('ListProduct');
+    //func for navigating to list product page
+    goToListProduct = (type) => {
+        this.props.navigator.navigate('ListProduct', {type: type});
     };
 
     render() {
@@ -60,7 +61,7 @@ export default class Collection extends Component {
                         {this.props.types.map((type) => (
                             <TouchableOpacity key={type.id}
                                               style={styles.touchableImg}
-                                              onPress={this.goToListProduct}>
+                                              onPress={() => this.goToListProduct(type)}>
                                 <ImageBackground style={styles.image} source={{uri: `${url}/${type.image}` }}>
                                     <Text style={styles.categoryText}>{type.name}</Text>
                                 </ImageBackground>
