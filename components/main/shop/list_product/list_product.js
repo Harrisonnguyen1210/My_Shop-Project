@@ -65,6 +65,7 @@ export default class ListProduct extends Component {
 
     componentDidMount = () => {
         const idType = this.props.navigation.getParam('type').id;
+        console.log('My id is' + idType);
         GetListProduct( idType, this.state.page).then(arrProduct => {
             this.setState({FlatListItems: arrProduct});
             console.log(this.state.FlatListItems);

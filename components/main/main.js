@@ -25,6 +25,7 @@ export default class Main extends Component{
     openControlPanel = () => {
         this.drawer.open()
     };
+    
     render() {
         return (
             <Drawer

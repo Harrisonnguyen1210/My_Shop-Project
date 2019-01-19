@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {
-    View, Text, TouchableOpacity, ScrollView,
+    View, Text, TouchableOpacity, Alert,
     Dimensions, StyleSheet, Image, FlatList,
 } from 'react-native';
 import Global from '../../../global';
+import SendOrder from '../../../../api/sendOrder';
+import GetToken from '../../../../api/getToken';
 
 const {width} = Dimensions.get('window');
 const imageWidth = width / 4;
@@ -98,7 +100,8 @@ const toTitleCase = (str) => {
 export default class CartView extends Component {
 
     goToProductDetail = (product) => {
-        this.props.navigation.navigate('ProductDetail', {product: product});
+        this.props.navigation.navigate('ProductDetail',
+            {product: product.product});
     };
 
     increaseQuan = (productID) => {
@@ -114,6 +117,54 @@ export default class CartView extends Component {
         Global.removeProduct(productID);
     };
 
+    // func to send order detail to server
+    onSendOrder = async () => {
+        try {
+            const token = await GetToken();
+            const arrayDetail = this.props.screenProps.map(e => ({
+                id: e.product.id,
+                quantity: e.quantity,
+            }));
+            if (arrayDetail.length > 0) {
+                const result = await SendOrder(token, arrayDetail);
+                if(result === 'ADD_SUCCESSFULLY') {
+                    Alert.alert(
+                        'Notice',
+                        'ORDER SUCCESSFUL',
+                        [
+                            {text: 'OK', onPress: () => console.log('OK Pressed')},
+                        ],
+                        { cancelable: false }
+                    )
+                }
+                else {
+                    Alert.alert(
+                        'Notice',
+                        'You have to sign in to order',
+                        [
+                            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                            {text: 'Sign In', onPress: () => Global.goToAuth()},
+                        ],
+                        { cancelable: false }
+                    )
+                }
+            } else {
+                Alert.alert(
+                    'Notice',
+                    'No product in cart',
+                    [
+                        {text: 'OK'},
+                    ],
+                    { cancelable: false }
+                )
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+
+    };
+
     render() {
         const {
             main, checkoutButton, checkoutTitle, wrapper,
@@ -123,10 +174,13 @@ export default class CartView extends Component {
         } = styles;
         const cartArray = this.props.screenProps;
         const arrTotal = cartArray.map(item => {
-            return item.product.price*item.quantity;
+            return item.product.price * item.quantity;
         });
         // calculate value for total money
-        const total = arrTotal.length > 0 ? arrTotal.reduce((accumulator, currentValue) => accumulator + currentValue) : 0;
+        const total = arrTotal.length > 0 ?
+            arrTotal.reduce(
+                (accumulator, currentValue) => accumulator + currentValue) :
+            0;
         return (
             <View style={wrapper}>
                 <FlatList style={main}
@@ -135,14 +189,20 @@ export default class CartView extends Component {
                           renderItem={({item}) => (
                               <View style={product}>
                                   {console.log(item.product.id)}
-                                  <Image source={{uri: `${url}/${item.product.images[0]}`}} style={productImage}/>
+                                  <Image
+                                      source={{uri: `${url}/${item.product.images[0]}`}}
+                                      style={productImage}/>
                                   <View style={[mainRight]}>
                                       <View style={{
                                           justifyContent: 'space-between',
                                           flexDirection: 'row',
                                       }}>
-                                          <Text style={txtName}>{toTitleCase(item.product.name)}</Text>
-                                          <TouchableOpacity onPress={() => {this.removeProduct(item.product.id)}}>
+                                          <Text style={txtName}>{toTitleCase(
+                                              item.product.name)}</Text>
+                                          <TouchableOpacity onPress={() => {
+                                              this.removeProduct(
+                                                  item.product.id);
+                                          }}>
                                               <Text style={{
                                                   fontFamily: 'Avenir',
                                                   color: '#969696',
@@ -150,21 +210,31 @@ export default class CartView extends Component {
                                           </TouchableOpacity>
                                       </View>
                                       <View>
-                                          <Text style={txtPrice}>{item.product.price}$</Text>
+                                          <Text
+                                              style={txtPrice}>{item.product.price}$</Text>
                                       </View>
                                       <View style={productController}>
                                           <View style={numberOfProduct}>
-                                              <TouchableOpacity onPress={() => {this.increaseQuan(item.product.id)}}>
+                                              <TouchableOpacity onPress={() => {
+                                                  this.increaseQuan(
+                                                      item.product.id);
+                                              }}>
                                                   <Text>+</Text>
                                               </TouchableOpacity>
                                               <Text>{item.quantity}</Text>
-                                              <TouchableOpacity onPress={() => {this.decreaseQuan(item.product.id)}}>
+                                              <TouchableOpacity onPress={() => {
+                                                  this.decreaseQuan(
+                                                      item.product.id);
+                                              }}>
                                                   <Text>-</Text>
                                               </TouchableOpacity>
                                           </View>
-                                          <TouchableOpacity onPress={() => this.goToProductDetail(item)}
+                                          <TouchableOpacity
+                                              onPress={() => this.goToProductDetail(
+                                                  item)}
                                               style={showDetailContainer}>
-                                              <Text style={txtShowDetail}>SHOW DETAILS</Text>
+                                              <Text style={txtShowDetail}>SHOW
+                                                  DETAILS</Text>
                                           </TouchableOpacity>
                                       </View>
                                   </View>
@@ -172,8 +242,10 @@ export default class CartView extends Component {
                           )}
                 >
                 </FlatList>
-                <TouchableOpacity style={checkoutButton}>
-                    <Text style={checkoutTitle}>TOTAL {total}$ CHECKOUT NOW</Text>
+                <TouchableOpacity style={checkoutButton}
+                                  onPress={this.onSendOrder}>
+                    <Text style={checkoutTitle}>TOTAL {total}$ CHECKOUT
+                        NOW</Text>
                 </TouchableOpacity>
             </View>
         );

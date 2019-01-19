@@ -5,5 +5,6 @@ module.exports = {
     removeProduct: null,
     signUserIn: null,
     goToSearch: null,
-    setSearchArray: null
+    setSearchArray: null,
+    goToAuth: null
 };

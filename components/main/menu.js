@@ -52,6 +52,7 @@ export default class Menu extends Component {
             user: null
         };
         Global.signUserIn = this.signUserIn;
+        Global.goToAuth = this.goToAuth;
     }
 
     signUserIn = (user) => {

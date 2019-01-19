@@ -22,7 +22,7 @@ export default class HomeView extends Component {
     render() {
         return (
             <ScrollView style={{flex: 1, backgroundColor: '#f1f1f1'}}>
-                <Collection/>
+                <Collection navigator={this.props.navigation}/>
                 <Category navigator={this.props.navigation} types={this.state.types}/>
                 <Top_Product navigator={this.props.navigation} products={this.state.products}/>
             </ScrollView>

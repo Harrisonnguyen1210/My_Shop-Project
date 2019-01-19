@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
-import map from '../../../../media/pic/map.jpg';
 import phoneIcon from '../../../../media/app_Icon/ic_phone.png';
 import mailIcon from '../../../../media/app_Icon/ic_email.png';
 import messageIcon from '../../../../media/app_Icon/ic_send.png';
 import locationIcon from '../../../../media/app_Icon/ic_location.png';
-
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -55,6 +54,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Avenir',
         color: '#AE005E',
         fontWeight: '500'
+    },
+    map: {
+        flex: 1,
+        ...StyleSheet.absoluteFillObject,
     }
 });
 
@@ -67,9 +70,22 @@ export default class Contact extends Component {
         return (
             <View style={wrapper}>
                 <View style={mapContainer}>
-                    <Image
-                        style={{ flex: 1, alignSelf: 'stretch', width: undefined }} source={map}
-                    />
+                    <MapView
+                        provider={PROVIDER_GOOGLE}
+                        style={styles.map}
+                        region={{
+                            latitude: 37.78825,
+                            longitude: -122.4324,
+                            latitudeDelta: 0.015,
+                            longitudeDelta: 0.0121,
+                        }}
+                    >
+                        <Marker
+                            coordinate={{latitude: 37.78825, longitude: -122.4324 }}
+                            title='My Shop'
+                            description='Welcome to my shop'
+                        />
+                    </MapView>
                 </View>
                 <View style={infoContainer}>
                     <View style={rowInfoContainer}>
