@@ -8,40 +8,45 @@ import {
     TouchableOpacity,
     StyleSheet,
     FlatList,
-    Dimensions,
+    Dimensions, Alert,
 } from 'react-native';
 import GetListProduct from '../../../../api/getListProduct';
+import colors from '../../../../res/colors';
 
 const {height, width} = Dimensions.get('window');
-const heightImg = height * 0.08 - 10;
+const heightImg = height * 0.06;
 
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
-        backgroundColor: 'white',
-        padding: 10,
+        backgroundColor: colors.white,
     },
     container: {
-        shadowColor: '#2e272b',
+        shadowColor: colors.shadow,
         shadowOffset: {width: 0, height: 3},
         shadowOpacity: 0.2,
         elevation: 5,
     },
     header: {
-        height: height * 0.08,
-        backgroundColor: 'green',
+        height: height * 0.06,
+        backgroundColor: colors.greyBackground,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingVertical: 5,
     },
-    backButtonView: {},
+    backButtonView: {
+        color: colors.mainText
+    },
     backButtonImg: {
         height: heightImg,
         width: heightImg,
     },
     headerText: {
+        fontSize: 15,
+        color: colors.mainText,
         justifyContent: 'center',
+        fontWeight: 'bold'
     },
     bodyText: {
         padding: 50,
@@ -65,7 +70,6 @@ export default class ListProduct extends Component {
 
     componentDidMount = () => {
         const idType = this.props.navigation.getParam('type').id;
-        console.log('My id is' + idType);
         GetListProduct( idType, this.state.page).then(arrProduct => {
             this.setState({FlatListItems: arrProduct});
             console.log(this.state.FlatListItems);
@@ -79,14 +83,27 @@ export default class ListProduct extends Component {
         }, () => {
             const idType = this.props.navigation.getParam('type').id;
             const page = this.state.page;
-
             GetListProduct( idType, page).then(arrProduct => {
-                console.log('###############');
+                console.log('------------------------');
+                console.log(arrProduct);
                 this.setState({
                     FlatListItems: arrProduct,
                     refreshing: false
                 });
-            }).catch(err => console.log(err));
+            }).catch(err => {
+                console.log(err);
+                this.setState({
+                    refreshing: false
+                });
+                Alert.alert(
+                    'Notice',
+                    'No more product to show',
+                    [
+                        {text: 'OK', onPress: () => {}},
+                    ],
+                    { cancelable: false }
+                )
+            });
         });
     };
 
@@ -97,7 +114,7 @@ export default class ListProduct extends Component {
                 <TouchableOpacity style={styles.backButtonView}
                                   onPress={() => this.props.navigation.goBack()}>
                     <Image style={styles.backButtonImg} source={require(
-                        '../../../../media/app_Icon/ic_back.png/')}/>
+                        '../../../../media/app_Icon/ic_back_color.png/')}/>
                 </TouchableOpacity>
                 <Text style={styles.headerText}>{this.props.navigation.getParam('type').name}</Text>
                 <View style={styles.view}/>

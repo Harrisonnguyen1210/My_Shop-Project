@@ -6,6 +6,7 @@ import {
 import Global from '../../../global';
 import SendOrder from '../../../../api/sendOrder';
 import GetToken from '../../../../api/getToken';
+import colors from '../../../../res/colors';
 
 const {width} = Dimensions.get('window');
 const imageWidth = width / 4;
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
         height: 50,
         margin: 10,
         marginTop: 0,
-        backgroundColor: '#2ABB9C',
+        backgroundColor: colors.main,
         borderRadius: 2,
         alignItems: 'center',
         justifyContent: 'center',
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
         width, backgroundColor: '#DFDFDF',
     },
     checkoutTitle: {
-        color: '#FFF',
+        color: colors.white,
         fontSize: 15,
         fontWeight: 'bold',
         fontFamily: 'Avenir',
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         margin: 10,
         padding: 10,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colors.white,
         borderRadius: 2,
         shadowColor: '#3B5458',
         shadowOffset: {width: 0, height: 3},

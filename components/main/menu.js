@@ -9,13 +9,14 @@ import {
 } from 'react-native';
 import Global from '../global';
 import RemoveToken from '../../api/removeToken';
+import colors from '../../res/colors';
 
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
-        backgroundColor: 'blue',
+        backgroundColor: colors.main,
         borderRightWidth: 3,
-        borderColor: 'white',
+        borderColor: colors.white,
         alignItems: 'center',
     },
     avatar: {
@@ -36,10 +37,10 @@ const styles = StyleSheet.create({
         height: '20%',
         borderRadius: 10,
         paddingHorizontal: 10,
-        backgroundColor: '#fff',
+        backgroundColor: colors.white,
     },
     username: {
-        color: '#fff',
+        color: colors.white,
         fontFamily: 'Avenir',
         fontSize: 15
     }

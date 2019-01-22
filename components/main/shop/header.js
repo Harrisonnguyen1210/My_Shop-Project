@@ -11,6 +11,7 @@ import {
 import icMenu from '../../../media/app_Icon/ic_menu.png';
 import Global from '../../global';
 import Search from '../../../api/searchProduct';
+import colors from '../../../res/colors';
 
 const {height} = Dimensions.get('window');
 
@@ -18,26 +19,27 @@ const styles = StyleSheet.create({
     wrapper: {
         padding: 10,
         height: height / 8,
-        backgroundColor: 'blue',
+        backgroundColor: colors.main,
         justifyContent: 'space-around'
     },
     row1: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         height: height / 20,
+        marginBottom: 10
     },
     textInput: {
+        borderRadius: 5,
         height: height / 20,
-        backgroundColor: '#FFF',
+        backgroundColor: colors.white,
         padding: 5
     },
     title: {
-        color: '#FFF',
-        fontSize: 20
+        color: colors.white,
+        fontSize: 25,
+        fontWeight: 'bold',
     },
-    menuIcon: {
-
-    }
 });
 
 export default class Header extends Component {
@@ -45,7 +47,7 @@ export default class Header extends Component {
         super(props);
         this.state = {
             txtSearch: ''
-        }
+        };
     }
 
     onSearch = () => {
@@ -62,7 +64,8 @@ export default class Header extends Component {
                     <TouchableOpacity onPress={this.props.onOpen}>
                         <Image source={icMenu}/>
                     </TouchableOpacity>
-                    <Text style={styles.title}>Wearing a dress</Text>
+                    <Text style={styles.title}>SHOPKING</Text>
+                    <View/>
                 </View>
                 <TextInput
                     style={styles.textInput}

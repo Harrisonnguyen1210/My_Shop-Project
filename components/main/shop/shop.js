@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, Text} from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 import Home from './home/home';
 import Contact from './contact/contact';
@@ -9,6 +9,9 @@ import Header from './header';
 import Global from '../../global';
 import SaveCart from '../../../api/saveCart';
 import GetCart from '../../../api/getCart';
+import colors from '../../../res/colors';
+import Badge from '../../../node_modules/react-native-tab-navigator/Badge';
+
 
 export default class Shop extends Component {
 
@@ -93,33 +96,46 @@ export default class Shop extends Component {
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'home'}
                         title="Home"
+                        selectedTitleStyle={{color: colors.mainText}}
                         renderIcon={() => <Image source={require(
                             '../../../media/app_Icon/ic_home.png')}/>}
+                        renderSelectedIcon={() => <Image source={require(
+                            '../../../media/app_Icon/ic_home_color.png')}/>}
                         onPress={() => this.setState({selectedTab: 'home'})}>
                         <Home/>
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'cart'}
                         title="Cart"
+                        selectedTitleStyle={{color: colors.mainText}}
                         renderIcon={() => <Image source={require(
                             '../../../media/app_Icon/ic_cart.png')}/>}
-                        badgeText={this.state.cartArray.length}
+                        renderSelectedIcon={() => <Image source={require(
+                            '../../../media/app_Icon/ic_cart_color.png')}/>}
+                        // badgeText={this.state.cartArray.length}
+                        renderBadge={() => <Badge style={{backgroundColor: colors.main}}>{this.state.cartArray.length}</Badge>}
                         onPress={() => this.setState({selectedTab: 'cart'})}>
                         <Cart cartArray={this.state.cartArray}/>
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'search'}
                         title="Search"
+                        selectedTitleStyle={{color: colors.mainText}}
                         renderIcon={() => <Image source={require(
                             '../../../media/app_Icon/ic_search.png')}/>}
+                        renderSelectedIcon={() => <Image source={require(
+                            '../../../media/app_Icon/ic_search_color.png')}/>}
                         onPress={() => this.setState({selectedTab: 'search'})}>
                         <Search/>
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'contact'}
                         title="Contact"
+                        selectedTitleStyle={{color: colors.mainText}}
                         renderIcon={() => <Image source={require(
                             '../../../media/app_Icon/ic_contact.png')}/>}
+                        renderSelectedIcon={() => <Image source={require(
+                            '../../../media/app_Icon/ic_contact_color.png')}/>}
                         onPress={() => this.setState({selectedTab: 'contact'})}>
                         <Contact/>
                     </TabNavigator.Item>

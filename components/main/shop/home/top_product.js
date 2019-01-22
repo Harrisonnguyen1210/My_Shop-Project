@@ -14,12 +14,13 @@ const {height, width} = Dimensions.get('window');
 const productWidth = (width - 50) / 2;
 const productHeight = productWidth / 560 * 840;
 const url = 'http://192.168.0.3/app/images/product';
+import colors from '../../../../res/colors';
 
 const styles = StyleSheet.create({
     wrapper: {
-        backgroundColor: '#ffffff',
+        backgroundColor: colors.white,
         margin: 10,
-        shadowColor: '#2e272b',
+        shadowColor: colors.shadow,
         shadowOffset: {width: 0, height: 3},
         shadowOpacity: 0.2,
         elevation: 5,
@@ -31,15 +32,17 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
+        fontWeight: 'bold',
+        color: colors.black
     },
     body: {
         justifyContent: 'space-around'
     },
     productContainer: {
         width: productWidth,
-        backgroundColor: 'red',
+        backgroundColor: colors.greyBackground,
         marginBottom: 10,
-        shadowColor: '#2e272b',
+        shadowColor: colors.shadow,
         shadowOffset: {width: 0, height: 3},
         shadowOpacity: 0.2,
         elevation: 5,
@@ -52,10 +55,12 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     productName: {
-        color: '#000000',
+        color: colors.mainText,
+        fontSize: 15
     },
     productPrice: {
-        color: '#000000',
+        color: colors.greyText,
+        fontSize: 12
     },
 
 });

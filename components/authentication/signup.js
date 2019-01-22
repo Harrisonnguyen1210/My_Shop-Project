@@ -41,7 +41,7 @@ export default class SignUp extends Component {
     registerUser = () => {
         const {email, name, password} = this.state;
         Register(email, name, password).then((response) => {
-            response === 'THANH_CONG' ? this.registerSuccessfully() : this.registerUnSuccessfully();
+            response === 'SUCCESSFUL' ? this.registerSuccessfully() : this.registerUnSuccessfully();
         });
     };
 
@@ -61,7 +61,7 @@ export default class SignUp extends Component {
     registerUnSuccessfully = () => {
         Alert.alert(
             'Notice',
-            'Sign up unsuccessfully, email has been used',
+            'Sign up unsuccessfully, please try again',
             [
                 {text: 'OK', onPress: () => this.removeEmail()},
             ],
