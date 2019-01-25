@@ -12,7 +12,6 @@ import GetCart from '../../../api/getCart';
 import colors from '../../../res/colors';
 import Badge from '../../../node_modules/react-native-tab-navigator/Badge';
 
-
 export default class Shop extends Component {
 
     constructor(props) {
@@ -38,17 +37,21 @@ export default class Shop extends Component {
     // when search inputText is focused, move to search Tab
     goToSearch = () => {
         this.setState({
-            selectedTab: 'search'
-        })
+            selectedTab: 'search',
+        });
     };
 
     // func for adding product to cart then saving cart data to asyncStorage
     addProductToCart = (product) => {
-        const isExist = this.state.cartArray.some(item => item.product.id === product.id);
-        if(isExist) return;
+        const isExist = this.state.cartArray.some(
+            item => item.product.id === product.id);
+        if (isExist) return;
         this.setState(
-            { cartArray: this.state.cartArray.concat({ product: product, quantity: 1 }) },
-            () => SaveCart(this.state.cartArray)
+            {
+                cartArray: this.state.cartArray.concat(
+                    {product: product, quantity: 1}),
+            },
+            () => SaveCart(this.state.cartArray),
         );
     };
 
@@ -56,10 +59,10 @@ export default class Shop extends Component {
     increaseQuan = (productId) => {
         const newCart = this.state.cartArray.map(item => {
             if (item.product.id !== productId) return item;
-            return { product: item.product, quantity: item.quantity + 1 };
+            return {product: item.product, quantity: item.quantity + 1};
         });
-        this.setState({ cartArray: newCart },
-            () => SaveCart(this.state.cartArray)
+        this.setState({cartArray: newCart},
+            () => SaveCart(this.state.cartArray),
         );
     };
 
@@ -67,18 +70,22 @@ export default class Shop extends Component {
     decreaseQuan = (productId) => {
         const newCart = this.state.cartArray.map(item => {
             if (item.product.id !== productId) return item;
-            return { product: item.product, quantity: item.quantity - 1 };
+            else {
+                if (item.quantity <= 0) return {product: item.product, quantity: item.quantity};
+                return {product: item.product, quantity: item.quantity - 1};
+            }
         });
-        this.setState({ cartArray: newCart },
-            () => SaveCart(this.state.cartArray)
+        this.setState({cartArray: newCart},
+            () => SaveCart(this.state.cartArray),
         );
     };
 
     // func for removing product in cart
     removeProduct = (productId) => {
-        const newCart = this.state.cartArray.filter(item => item.product.id !== productId);
-        this.setState({ cartArray: newCart },
-            () => SaveCart(this.state.cartArray)
+        const newCart = this.state.cartArray.filter(
+            item => item.product.id !== productId);
+        this.setState({cartArray: newCart},
+            () => SaveCart(this.state.cartArray),
         );
     };
 
@@ -113,7 +120,8 @@ export default class Shop extends Component {
                         renderSelectedIcon={() => <Image source={require(
                             '../../../media/app_Icon/ic_cart_color.png')}/>}
                         // badgeText={this.state.cartArray.length}
-                        renderBadge={() => <Badge style={{backgroundColor: colors.main}}>{this.state.cartArray.length}</Badge>}
+                        renderBadge={() => <Badge
+                            style={{backgroundColor: colors.main}}>{this.state.cartArray.length}</Badge>}
                         onPress={() => this.setState({selectedTab: 'cart'})}>
                         <Cart cartArray={this.state.cartArray}/>
                     </TabNavigator.Item>

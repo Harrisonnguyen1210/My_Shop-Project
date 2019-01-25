@@ -5,36 +5,29 @@ import mailIcon from '../../../../media/app_Icon/ic_email.png';
 import messageIcon from '../../../../media/app_Icon/ic_send.png';
 import locationIcon from '../../../../media/app_Icon/ic_location.png';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import colors from '../../../../res/colors';
 
-const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
-    wrapper: { flex: 1, backgroundColor: '#F6F6F6' },
-    mapStyle: {
-        width: width - 40,
-        height: 230,
-        alignSelf: 'center',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
+    wrapper: { flex: 1, backgroundColor: colors.greyBackground },
     mapContainer: {
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colors.white,
         margin: 10,
         borderRadius: 2,
-        shadowColor: '#3B5458',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.2
     },
     infoContainer: {
         padding: 10,
         flex: 1,
-        backgroundColor: '#FFF',
+        backgroundColor: colors.white,
         margin: 10,
         marginTop: 0,
         borderRadius: 2,
-        shadowColor: '#3B5458',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.2
     },
@@ -44,15 +37,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         borderBottomWidth: 1,
-        borderColor: '#D6D6D6'
+        borderColor: colors.greyBackground
     },
     imageStyle: {
         width: 30,
         height: 30
     },
     infoText: {
-        fontFamily: 'Avenir',
-        color: '#AE005E',
+        color: colors.mainText,
         fontWeight: '500'
     },
     map: {
@@ -65,23 +57,23 @@ export default class Contact extends Component {
     render() {
         const {
             mapContainer, wrapper, infoContainer,
-            rowInfoContainer, imageStyle, infoText
+            rowInfoContainer, imageStyle, infoText, map
         } = styles;
         return (
             <View style={wrapper}>
                 <View style={mapContainer}>
                     <MapView
                         provider={PROVIDER_GOOGLE}
-                        style={styles.map}
+                        style={map}
                         region={{
-                            latitude: 37.78825,
-                            longitude: -122.4324,
+                            latitude: 60.1699,
+                            longitude: 24.9384,
                             latitudeDelta: 0.015,
                             longitudeDelta: 0.0121,
                         }}
                     >
                         <Marker
-                            coordinate={{latitude: 37.78825, longitude: -122.4324 }}
+                            coordinate={{latitude: 60.1699, longitude: 24.9384 }}
                             title='My Shop'
                             description='Welcome to my shop'
                         />
@@ -90,19 +82,19 @@ export default class Contact extends Component {
                 <View style={infoContainer}>
                     <View style={rowInfoContainer}>
                         <Image source={locationIcon} style={imageStyle} />
-                        <Text style={infoText}>90 Le Thi Rieng/ Ben Thanh Dist</Text>
+                        <Text style={infoText}>123 Helsinki Finland</Text>
                     </View>
                     <View style={rowInfoContainer}>
                         <Image source={phoneIcon} style={imageStyle} />
-                        <Text style={infoText}>(+84) 01694472176</Text>
+                        <Text style={infoText}>(+358) 12345678</Text>
                     </View>
                     <View style={rowInfoContainer}>
                         <Image source={mailIcon} style={imageStyle} />
-                        <Text style={infoText}>khoaphamtraining@gmail.com</Text>
+                        <Text style={infoText}>shopking.com</Text>
                     </View>
                     <View style={[rowInfoContainer, { borderBottomWidth: 0 }]}>
                         <Image source={messageIcon} style={imageStyle} />
-                        <Text style={infoText}>(+84) 09877067707</Text>
+                        <Text style={infoText}>(+358) 12345678</Text>
                     </View>
                 </View>
             </View>

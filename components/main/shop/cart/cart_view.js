@@ -100,20 +100,24 @@ const toTitleCase = (str) => {
 
 export default class CartView extends Component {
 
+    // func to go to product detail
     goToProductDetail = (product) => {
         this.props.navigation.navigate('ProductDetail',
             {product: product.product});
     };
 
+    // func for calling increaseQuan func in shop.js
     increaseQuan = (productID) => {
         Global.increaseQuan(productID);
     };
 
+    // func for calling decreaseQuan func in shop.js
     decreaseQuan = (productID) => {
         Global.decreaseQuan(productID);
 
     };
 
+    // func for calling removeProduct func in shop.js
     removeProduct = (productID) => {
         Global.removeProduct(productID);
     };
@@ -205,8 +209,7 @@ export default class CartView extends Component {
                                                   item.product.id);
                                           }}>
                                               <Text style={{
-                                                  fontFamily: 'Avenir',
-                                                  color: '#969696',
+                                                  color: colors.greyText,
                                               }}>X</Text>
                                           </TouchableOpacity>
                                       </View>
