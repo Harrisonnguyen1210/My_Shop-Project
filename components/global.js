@@ -6,5 +6,5 @@ module.exports = {
     signUserIn: null,
     goToSearch: null,
     setSearchArray: null,
-    goToAuth: null
+    goToAuth: null,
 };

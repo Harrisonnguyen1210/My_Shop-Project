@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
 
 export default class Collection extends Component {
 
+    // func to go to list product
     goToListProduct = () => {
         this.props.navigator.navigate('ListProduct', {type: {id: 'COLLECTION', name: 'SPRING COLLECTION'} });
     };

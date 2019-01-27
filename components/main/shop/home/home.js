@@ -9,11 +9,11 @@ import {Platform, View} from 'react-native';
 const HomeNavigator = createStackNavigator({
     HomeView: HomeView,
     ProductDetail: ProductDetail,
-    ListProduct: ListProduct
-},{
+    ListProduct: ListProduct,
+}, {
     initialRouteName: 'HomeView',
-    headerMode: "none",
-    mode: Platform.OS === "ios" ? "modal" : "card",
+    headerMode: 'none',
+    mode: Platform.OS === 'ios' ? 'modal' : 'card',
 });
 
 const HomeContainer = createAppContainer(HomeNavigator);

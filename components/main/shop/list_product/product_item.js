@@ -5,17 +5,15 @@ import {
     TouchableOpacity,
     StyleSheet,
     Image,
-    Dimensions,
 } from 'react-native';
 import colors from '../../../../res/colors';
 
-const {height, width} = Dimensions.get('window');
 const url = 'http://192.168.0.3/app/images/product';
 const styles = StyleSheet.create({
     itemContainer: {
         flexDirection: 'row',
         paddingVertical: 5,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
     },
     imgItem: {
         width: '30%',
@@ -34,24 +32,24 @@ const styles = StyleSheet.create({
     },
     itemPrice: {
         color: colors.mainText,
-        fontSize: 10
+        fontSize: 10,
     },
     itemMaterial: {
         color: colors.greyText,
-        fontSize: 10
+        fontSize: 10,
     },
     lastRowInfo: {
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    colorText:  {
+    colorText: {
         fontSize: 12,
-        width: '55%'
+        width: '55%',
     },
     showDetail: {
         fontSize: 12,
         color: colors.mainText,
-    }
+    },
 });
 
 // func to capitalize every first letter of each words
@@ -81,7 +79,8 @@ export default class ProductItem extends Component {
                     <Text style={styles.itemPrice}>{product.price}$</Text>
                     <Text style={styles.itemMaterial}>{product.material}</Text>
                     <View style={styles.lastRowInfo}>
-                        <Text style={styles.colorText}>Color {product.color}</Text>
+                        <Text
+                            style={styles.colorText}>Color {product.color}</Text>
                         <View style={{
                             height: 16,
                             width: 16,

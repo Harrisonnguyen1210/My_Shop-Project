@@ -132,26 +132,33 @@ export default class CartView extends Component {
             }));
             if (arrayDetail.length > 0) {
                 const result = await SendOrder(token, arrayDetail);
-                if(result === 'ADD_SUCCESSFULLY') {
+                if (result === 'ADD_SUCCESSFULLY') {
                     Alert.alert(
                         'Notice',
                         'ORDER SUCCESSFUL',
                         [
-                            {text: 'OK', onPress: () => console.log('OK Pressed')},
+                            {
+                                text: 'OK',
+                                onPress: () => console.log('OK Pressed'),
+                            },
                         ],
-                        { cancelable: false }
-                    )
+                        {cancelable: false},
+                    );
                 }
                 else {
                     Alert.alert(
                         'Notice',
                         'You have to sign in to order',
                         [
-                            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                            {
+                                text: 'Cancel',
+                                onPress: () => console.log('Cancel Pressed'),
+                                style: 'cancel',
+                            },
                             {text: 'Sign In', onPress: () => Global.goToAuth()},
                         ],
-                        { cancelable: false }
-                    )
+                        {cancelable: false},
+                    );
                 }
             } else {
                 Alert.alert(
@@ -160,12 +167,12 @@ export default class CartView extends Component {
                     [
                         {text: 'OK'},
                     ],
-                    { cancelable: false }
-                )
+                    {cancelable: false},
+                );
             }
 
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
 
     };

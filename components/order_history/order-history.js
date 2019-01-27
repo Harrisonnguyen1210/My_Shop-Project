@@ -2,35 +2,48 @@ import React, {Component} from 'react';
 import {
     View, TouchableOpacity, Text, Image, StyleSheet, Dimensions, ScrollView,
 } from 'react-native';
-import backSpecial from '../../media/app_Icon/ic_back.png';
+import backSpecial from '../../media/app_Icon/ic_back_white.png';
 import GetOrderHistory from '../../api/getOrderHistory';
 import GetToken from '../../api/getToken';
+import colors from '../../res/colors';
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
-    wrapper: {flex: 1, backgroundColor: '#fff'},
+    wrapper: {flex: 1},
     header: {
         flex: 1,
-        backgroundColor: '#2ABB9C',
+        backgroundColor: colors.main,
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        paddingHorizontal: 10,
-    },// eslint-disable-line
-    headerTitle: {fontFamily: 'Avenir', color: '#fff', fontSize: 20},
-    backIconStyle: {width: 30, height: 30},
-    body: {flex: 10, backgroundColor: '#F6F6F6'},
+    },
+    headerTitle: {color: colors.white, fontSize: 25, fontWeight: 'bold'},
+    backIconStyle: {width: height / 10, height: height / 10},
+    body: {flex: 9, backgroundColor: colors.greyBackground},
     orderRow: {
         height: width / 3,
-        backgroundColor: '#FFF',
+        backgroundColor: colors.white,
         margin: 10,
         shadowOffset: {width: 2, height: 2},
-        shadowColor: '#DFDFDF',
+        shadowColor: colors.shadow,
         shadowOpacity: 0.2,
         padding: 10,
         borderRadius: 2,
         justifyContent: 'space-around',
     },
+    orderList: {
+        color: colors.black,
+        fontWeight: 'bold',
+    },
+    orderId: {color: colors.mainText, fontWeight: 'bold'},
+    orderTime: {color: colors.greyText},
+    orderStatus: {color: colors.mainText},
+    orderTotal: {color: colors.greyText},
+    viewList: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    dummyView: {width: height / 10, height: height / 10},
 });
 
 export default class OrderHistory extends Component {
@@ -39,6 +52,7 @@ export default class OrderHistory extends Component {
         this.state = {arrOrder: []};
     }
 
+    //func for getting token then getting order history
     componentDidMount = () => {
         GetToken().then(token =>
             GetOrderHistory(token),
@@ -49,11 +63,14 @@ export default class OrderHistory extends Component {
     };
 
     render() {
-        const {wrapper, header, headerTitle, backIconStyle, body, orderRow} = styles;
+        const {
+            wrapper, header, headerTitle, backIconStyle, body, orderRow,
+            orderList, orderId, orderTime, orderStatus, orderTotal, viewList, dummyView,
+        } = styles;
         return (
             <View style={wrapper}>
                 <View style={header}>
-                    <View/>
+                    <View style={dummyView}/>
                     <Text style={headerTitle}>Order History</Text>
                     <TouchableOpacity
                         onPress={() => this.props.navigation.goBack()}>
@@ -64,54 +81,30 @@ export default class OrderHistory extends Component {
                     <ScrollView>
                         {this.state.arrOrder.map(orderItem => (
                             <View style={orderRow} key={orderItem.id}>
-                                <View style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                }}>
-                                    <Text style={{
-                                        color: '#9A9A9A',
-                                        fontWeight: 'bold',
-                                    }}>Order id:</Text>
+                                <View style={viewList}>
+                                    <Text style={orderList}>Order id:</Text>
                                     <Text
-                                        style={{color: '#2ABB9C'}}>ORD{orderItem.id}</Text>
+                                        style={orderId}>ORD{orderItem.id}</Text>
                                 </View>
-                                <View style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                }}>
-                                    <Text style={{
-                                        color: '#9A9A9A',
-                                        fontWeight: 'bold',
-                                    }}>OrderTime:</Text>
-                                    <Text style={{color: '#C21C70'}}>{orderItem.date_order}</Text>
-                                </View>
-                                <View style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                }}>
-                                    <Text style={{
-                                        color: '#9A9A9A',
-                                        fontWeight: 'bold',
-                                    }}>Status:</Text>
+                                <View style={viewList}>
+                                    <Text style={orderList}>OrderTime:</Text>
                                     <Text
-                                        style={{color: '#2ABB9C'}}>{orderItem.status ? 'Complete' : 'Pending'}</Text>
+                                        style={orderTime}>{orderItem.date_order}</Text>
                                 </View>
-                                <View style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                }}>
-                                    <Text style={{
-                                        color: '#9A9A9A',
-                                        fontWeight: 'bold',
-                                    }}>Total:</Text>
-                                    <Text style={{
-                                        color: '#C21C70',
-                                        fontWeight: 'bold',
-                                    }}>{orderItem.total}$</Text>
+                                <View style={viewList}>
+                                    <Text style={orderList}>Status:</Text>
+                                    <Text
+                                        style={orderStatus}>{orderItem.status ?
+                                        'Complete' :
+                                        'Pending'}</Text>
+                                </View>
+                                <View style={viewList}>
+                                    <Text style={orderList}>Total:</Text>
+                                    <Text
+                                        style={orderTotal}>{orderItem.total}$</Text>
                                 </View>
                             </View>
                         ))}
-
                     </ScrollView>
                 </View>
             </View>

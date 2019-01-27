@@ -8,9 +8,8 @@ import {
     TouchableOpacity,
     FlatList,
 } from 'react-native';
-import ProductItem from '../list_product/product_item';
 
-const {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 const productWidth = (width - 50) / 2;
 const productHeight = productWidth / 560 * 840;
 const url = 'http://192.168.0.3/app/images/product';
@@ -33,14 +32,14 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: colors.black
+        color: colors.black,
     },
     body: {
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
     },
     productContainer: {
         width: productWidth,
-        backgroundColor: colors.greyBackground,
+        backgroundColor: colors.white,
         marginBottom: 10,
         shadowColor: colors.shadow,
         shadowOffset: {width: 0, height: 3},
@@ -56,17 +55,19 @@ const styles = StyleSheet.create({
     },
     productName: {
         color: colors.mainText,
-        fontSize: 15
+        fontSize: 15,
+        fontWeight: 'bold',
     },
     productPrice: {
         color: colors.greyText,
-        fontSize: 12
+        fontSize: 12,
     },
 
 });
 
 export default class Top_Product extends Component {
 
+    // func to go the product detail
     goToProductDetail = (product) => {
         this.props.navigator.navigate('ProductDetail', {product: product});
     };
@@ -86,7 +87,8 @@ export default class Top_Product extends Component {
                         (
                             <TouchableOpacity key={item.id}
                                               style={styles.productContainer}
-                                              onPress={() => this.goToProductDetail(item)}>
+                                              onPress={() => this.goToProductDetail(
+                                                  item)}>
                                 <Image style={styles.productImage}
                                        source={{uri: `${url}/${item.images[0]}`}}/>
                                 <View style={styles.productInfo}>

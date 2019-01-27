@@ -4,26 +4,41 @@ import {
     TextInput,
     Text,
     StyleSheet,
-    TouchableOpacity,
+    TouchableOpacity, Dimensions,
 } from 'react-native';
 import signIn from '../../api/signIn';
 import Global from '../global';
 import SaveToken from '../../api/saveToken';
+import colors from '../../res/colors';
 
+const {height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     body: {
-        height: '80%',
-        backgroundColor: 'red',
+        height: height / 2,
         alignItems: 'center',
         justifyContent: 'center',
     },
     inputText: {
         width: '60%',
-        minHeight: 50,
-        backgroundColor: 'white',
-        borderRadius: 20,
         marginBottom: 10,
-        paddingLeft: 10,
+        color: colors.white,
+    },
+    inputTitle: {
+        color: colors.white,
+        fontSize: 10,
+        width: '60%',
+    },
+    btnSignIn: {
+        width: '50%',
+        backgroundColor: colors.white,
+        height: 40,
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    textSignIn: {
+        color: colors.mainText,
+        fontWeight: 'bold',
     },
 });
 
@@ -42,29 +57,38 @@ export default class SignIn extends Component {
         signIn(email, password).then((response) => {
             Global.signUserIn(response.user);
             this.props.goBack();
-            SaveToken(response.token).then(res => {
-                console.log('Token is saved')
+            SaveToken(response.token).then(() => {
+                console.log('Token is saved');
             });
             console.log(response);
-        }).catch(err => console.log(err))
+        }).catch(err => console.log(err));
     };
 
     render() {
         return (
             <View style={styles.body}>
+                <Text style={styles.inputTitle}>Your email *</Text>
                 <TextInput style={styles.inputText}
                            placeholder={'Enter your email'}
                            value={this.state.email}
                            onChangeText={email => this.setState(
-                               {email: email})}/>
+                               {email: email})}
+                           underlineColorAndroid={colors.white}
+                           placeholderTextColor={colors.white}
+                />
+                <Text style={styles.inputTitle}>Your password *</Text>
                 <TextInput style={styles.inputText}
                            secureTextEntry={true}
                            value={this.state.password}
                            onChangeText={password => this.setState(
                                {password: password})}
-                           placeholder={'Enter your password'}/>
-                <TouchableOpacity onPress={this.signUserIn}>
-                    <Text>SIGN IN</Text>
+                           placeholder={'Enter your password'}
+                           underlineColorAndroid={colors.white}
+                           placeholderTextColor={colors.white}
+                />
+                <TouchableOpacity style={styles.btnSignIn}
+                                  onPress={this.signUserIn}>
+                    <Text style={styles.textSignIn}>SIGN IN</Text>
                 </TouchableOpacity>
             </View>
         );

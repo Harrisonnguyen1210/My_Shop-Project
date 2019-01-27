@@ -15,6 +15,7 @@ import Main from './components/main/main';
 import Order_History from './components/order_history/order-history';
 import RefreshToken from './api/refreshToken';
 
+// transition configure
 const TransitionConfiguration = () => {
     return {
         transitionSpec: {
@@ -24,9 +25,9 @@ const TransitionConfiguration = () => {
             useNativeDriver: true,
         },
         screenInterpolator: (sceneProps) => {
-            const { layout, position, scene } = sceneProps;
+            const {layout, position, scene} = sceneProps;
             const width = layout.initWidth;
-            const { index, route } = scene;
+            const {index, route} = scene;
             const params = route.params || {}; // <- That's new
             const transition = params.transition || 'default'; // <- That's new
             return {
@@ -34,17 +35,19 @@ const TransitionConfiguration = () => {
                 default: CollapseExpand(index, position),
             }[transition];
         },
-    }
+    };
 };
 
+// define slide from right transition
 let SlideFromRight = (index, position, width) => {
     const translateX = position.interpolate({
         inputRange: [index - 1, index, index + 1],
-        outputRange: [width, 0, 0]
+        outputRange: [width, 0, 0],
     });
-    return {transform: [{translateX}]}
+    return {transform: [{translateX}]};
 };
 
+// define collapse expand transition
 let CollapseExpand = (index, position) => {
     const inputRange = [index - 1, index, index + 1];
     const opacity = position.interpolate({
@@ -60,8 +63,8 @@ let CollapseExpand = (index, position) => {
     return {
         opacity,
         transform: [
-            { scaleY }
-        ]
+            {scaleY},
+        ],
     };
 };
 
@@ -70,10 +73,10 @@ const AppNavigator = createStackNavigator({
     Authentication: Authentication,
     Change_Info: Change_Info,
     Order_History: Order_History,
-},{
+}, {
     initialRouteName: 'Main',
-    headerMode: "none",
-    mode: Platform.OS === "ios" ? "modal" : "card",
+    headerMode: 'none',
+    mode: Platform.OS === 'ios' ? 'modal' : 'card',
     transitionConfig: TransitionConfiguration,
 });
 

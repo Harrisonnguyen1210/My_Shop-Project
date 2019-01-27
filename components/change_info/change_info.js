@@ -1,45 +1,56 @@
 import React, {Component} from 'react';
 import {
-    View, TouchableOpacity, Text, Image, StyleSheet, TextInput, Alert,
+    View,
+    TouchableOpacity,
+    Text,
+    Image,
+    StyleSheet,
+    TextInput,
+    Alert,
+    Dimensions,
 } from 'react-native';
-import backSpecial from '../../media/app_Icon/ic_back.png';
+import backSpecial from '../../media/app_Icon/ic_back_white.png';
 import GetToken from '../../api/getToken';
 import ChangeInfoAPI from '../../api/changeInfo';
 import Global from '../global';
+import colors from '../../res/colors';
 
+const {height} = Dimensions.get('window');
 const styles = StyleSheet.create({
-    wrapper: {flex: 1, backgroundColor: '#fff'},
+    wrapper: {flex: 1, backgroundColor: colors.white},
     header: {
         flex: 1,
-        backgroundColor: '#2ABB9C',
+        backgroundColor: colors.main,
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        paddingHorizontal: 10,
-    },// eslint-disable-line
-    headerTitle: {fontFamily: 'Avenir', color: '#fff', fontSize: 20},
-    backIconStyle: {width: 30, height: 30},
-    body: {flex: 10, backgroundColor: '#F6F6F6', justifyContent: 'center'},
+    },
+    headerTitle: {color: colors.white, fontSize: 25, fontWeight: 'bold'},
+    backIconStyle: {width: height / 10, height: height / 10},
+    dummyView: {width: height / 10, height: height / 10},
+    body: {
+        flex: 9,
+        backgroundColor: colors.greyBackground,
+        justifyContent: 'center',
+    },
     textInput: {
         height: 45,
         marginHorizontal: 20,
-        backgroundColor: '#FFFFFF',
-        fontFamily: 'Avenir',
+        backgroundColor: colors.white,
         paddingLeft: 20,
         borderRadius: 20,
         marginBottom: 20,
-        borderColor: '#2ABB9C',
+        borderColor: colors.main,
         borderWidth: 1,
     },
     signInTextStyle: {
-        color: '#FFF',
-        fontFamily: 'Avenir',
+        color: colors.white,
         fontWeight: '600',
         paddingHorizontal: 20,
     },
     signInContainer: {
         marginHorizontal: 20,
-        backgroundColor: '#2ABB9C',
+        backgroundColor: colors.main,
         borderRadius: 20,
         height: 45,
         alignItems: 'center',
@@ -63,20 +74,18 @@ export default class ChangeInfo extends Component {
         };
     }
 
+    // get token then change user info
     changeInfo = () => {
-        GetToken()
-        .then(token => {
-            ChangeInfoAPI(token, this.state.txtName, this.state.txtPhone, this.state.txtAddress)
-            .then((user) => {
-                console.log('dfsgdhfsd');
-                console.log(user);
+        GetToken().then(token => {
+            ChangeInfoAPI(token, this.state.txtName, this.state.txtPhone,
+                this.state.txtAddress).then((user) => {
                 this.alertSuccess();
                 Global.signUserIn(user);
             });
-        })
-        .catch(err => console.log(err));
+        }).catch(err => console.log(err));
     };
 
+    // alert when successfully change user info
     alertSuccess = () => {
         Alert.alert(
             'Notice',
@@ -91,13 +100,13 @@ export default class ChangeInfo extends Component {
     render() {
         const {
             wrapper, header, headerTitle, backIconStyle, body,
-            signInContainer, signInTextStyle, textInput,
+            signInContainer, signInTextStyle, textInput, dummyView,
         } = styles;
         const {txtName, txtAddress, txtPhone} = this.state;
         return (
             <View style={wrapper}>
                 <View style={header}>
-                    <View/>
+                    <View style={dummyView}/>
                     <Text style={headerTitle}>User Information</Text>
                     <TouchableOpacity
                         onPress={() => this.props.navigation.goBack()}>

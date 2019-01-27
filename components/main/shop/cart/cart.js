@@ -7,11 +7,11 @@ import {Platform, View} from 'react-native';
 
 const CartNavigator = createStackNavigator({
     CartView: CartView,
-    ProductDetail: ProductDetail
-},{
+    ProductDetail: ProductDetail,
+}, {
     initialRouteName: 'CartView',
-    headerMode: "none",
-    mode: Platform.OS === "ios" ? "modal" : "card",
+    headerMode: 'none',
+    mode: Platform.OS === 'ios' ? 'modal' : 'card',
 });
 
 const CartContainer = createAppContainer(CartNavigator);

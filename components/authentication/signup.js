@@ -5,24 +5,39 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    Alert
+    Alert, Dimensions,
 } from 'react-native';
 import Register from '../../api/register';
+import colors from '../../res/colors';
 
+const {height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     body: {
-        height: '80%',
-        backgroundColor: 'red',
+        height: height / 2,
         alignItems: 'center',
         justifyContent: 'center',
     },
     inputText: {
         width: '60%',
-        minHeight: 50,
-        backgroundColor: 'white',
-        borderRadius: 20,
         marginBottom: 10,
-        paddingLeft: 10,
+        color: colors.white,
+    },
+    inputTitle: {
+        color: colors.white,
+        fontSize: 10,
+        width: '60%',
+    },
+    btnSignUp: {
+        width: '50%',
+        backgroundColor: colors.white,
+        height: 40,
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    textSignUp: {
+        color: colors.mainText,
+        fontWeight: 'bold',
     },
 });
 
@@ -33,7 +48,7 @@ export default class SignUp extends Component {
             email: '',
             name: '',
             password: '',
-            rePassword: ''
+            rePassword: '',
         };
     }
 
@@ -41,7 +56,9 @@ export default class SignUp extends Component {
     registerUser = () => {
         const {email, name, password} = this.state;
         Register(email, name, password).then((response) => {
-            response === 'SUCCESSFUL' ? this.registerSuccessfully() : this.registerUnSuccessfully();
+            response === 'SUCCESSFUL' ?
+                this.registerSuccessfully() :
+                this.registerUnSuccessfully();
         });
     };
 
@@ -53,8 +70,8 @@ export default class SignUp extends Component {
             [
                 {text: 'OK', onPress: () => this.props.goToSignIn()},
             ],
-            { cancelable: false }
-        )
+            {cancelable: false},
+        );
     };
 
     // func to alert user registered unsuccessfully
@@ -65,40 +82,55 @@ export default class SignUp extends Component {
             [
                 {text: 'OK', onPress: () => this.removeEmail()},
             ],
-            { cancelable: false }
-        )
+            {cancelable: false},
+        );
     };
 
     // func to remove email input if register unsuccessfully
     removeEmail = () => {
         this.setState({
-            email: ''
+            email: '',
         });
     };
 
     render() {
         return (
             <View style={styles.body}>
+                <Text style={styles.inputTitle}>Your name *</Text>
                 <TextInput style={styles.inputText}
                            placeholder={'Enter your name'}
                            value={this.state.name}
-                           onChangeText={text => this.setState({name: text})}/>
+                           onChangeText={text => this.setState({name: text})}
+                           underlineColorAndroid={colors.white}
+                           placeholderTextColor={colors.white}/>
+                <Text style={styles.inputTitle}>Your email *</Text>
                 <TextInput style={styles.inputText}
                            placeholder={'Enter your email'}
                            value={this.state.email}
-                           onChangeText={email => this.setState({email: email})}/>
+                           onChangeText={email => this.setState({email: email})}
+                           underlineColorAndroid={colors.white}
+                           placeholderTextColor={colors.white}
+                />
+                <Text style={styles.inputTitle}>Your password *</Text>
                 <TextInput style={styles.inputText}
                            placeholder={'Enter your password'}
                            value={this.state.password}
                            secureTextEntry={true}
-                           onChangeText={password => this.setState({password: password})}/>
+                           onChangeText={password => this.setState(
+                               {password: password})}
+                           underlineColorAndroid={colors.white}
+                           placeholderTextColor={colors.white}/>
                 <TextInput style={styles.inputText}
                            placeholder={'Re-Enter your password'}
                            value={this.state.rePassword}
                            secureTextEntry={true}
-                           onChangeText={rePassword => this.setState({rePassword: rePassword})}/>
-                <TouchableOpacity onPress={this.registerUser}>
-                    <Text>SIGN UP</Text>
+                           onChangeText={rePassword => this.setState(
+                               {rePassword: rePassword})}
+                           underlineColorAndroid={colors.white}
+                           placeholderTextColor={colors.white}/>
+                <TouchableOpacity style={styles.btnSignUp}
+                                  onPress={this.registerUser}>
+                    <Text style={styles.textSignUp}>SIGN UP</Text>
                 </TouchableOpacity>
             </View>
         );

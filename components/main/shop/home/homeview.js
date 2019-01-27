@@ -12,20 +12,25 @@ export default class HomeView extends Component {
         super(props);
         this.state = {
             types: [],
-            products: []
+            products: [],
         };
     }
 
     componentDidMount = () => {
-        getData().then(json => this.setState({types: json.type, products: json.product}));
+        getData().
+            then(json => this.setState(
+                {types: json.type, products: json.product}));
     };
 
     render() {
         return (
-            <ScrollView style={{flex: 1, backgroundColor: colors.greyBackground}}>
+            <ScrollView
+                style={{flex: 1, backgroundColor: colors.greyBackground}}>
                 <Collection navigator={this.props.navigation}/>
-                <Category navigator={this.props.navigation} types={this.state.types}/>
-                <Top_Product navigator={this.props.navigation} products={this.state.products}/>
+                <Category navigator={this.props.navigation}
+                          types={this.state.types}/>
+                <Top_Product navigator={this.props.navigation}
+                             products={this.state.products}/>
             </ScrollView>
         );
     }

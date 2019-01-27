@@ -13,7 +13,7 @@ import {
 import GetListProduct from '../../../../api/getListProduct';
 import colors from '../../../../res/colors';
 
-const {height, width} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 const heightImg = height * 0.06;
 
 const styles = StyleSheet.create({
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
     },
     backButtonView: {
-        color: colors.mainText
+        color: colors.mainText,
     },
     backButtonImg: {
         height: heightImg,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: colors.mainText,
         justifyContent: 'center',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     bodyText: {
         padding: 50,
@@ -64,13 +64,13 @@ export default class ListProduct extends Component {
         this.state = {
             FlatListItems: [],
             refreshing: false,
-            page: 1
+            page: 1,
         };
     }
 
     componentDidMount = () => {
         const idType = this.props.navigation.getParam('type').id;
-        GetListProduct( idType, this.state.page).then(arrProduct => {
+        GetListProduct(idType, this.state.page).then(arrProduct => {
             this.setState({FlatListItems: arrProduct});
             console.log(this.state.FlatListItems);
         }).catch(err => console.log(err));
@@ -79,36 +79,36 @@ export default class ListProduct extends Component {
     _onRefresh = () => {
         this.setState({
             refreshing: true,
-            page: this.state.page+1
+            page: this.state.page + 1,
         }, () => {
             const idType = this.props.navigation.getParam('type').id;
             const page = this.state.page;
-            GetListProduct( idType, page).then(arrProduct => {
-                console.log('------------------------');
-                console.log(arrProduct);
+            GetListProduct(idType, page).then(arrProduct => {
                 this.setState({
                     FlatListItems: arrProduct,
-                    refreshing: false
+                    refreshing: false,
                 });
             }).catch(err => {
                 console.log(err);
                 this.setState({
-                    refreshing: false
+                    refreshing: false,
                 });
                 Alert.alert(
                     'Notice',
                     'No more product to show',
                     [
-                        {text: 'OK', onPress: () => {}},
+                        {
+                            text: 'OK', onPress: () => {
+                            },
+                        },
                     ],
-                    { cancelable: false }
-                )
+                    {cancelable: false},
+                );
             });
         });
     };
 
     render() {
-
         const Sticky_header_View = (
             <View style={styles.header}>
                 <TouchableOpacity style={styles.backButtonView}
@@ -116,7 +116,8 @@ export default class ListProduct extends Component {
                     <Image style={styles.backButtonImg} source={require(
                         '../../../../media/app_Icon/ic_back_color.png/')}/>
                 </TouchableOpacity>
-                <Text style={styles.headerText}>{this.props.navigation.getParam('type').name}</Text>
+                <Text style={styles.headerText}>{this.props.navigation.getParam(
+                    'type').name}</Text>
                 <View style={styles.view}/>
             </View>
         );
@@ -128,7 +129,9 @@ export default class ListProduct extends Component {
                           ListHeaderComponent={Sticky_header_View}
                           stickyHeaderIndices={[0]}
                           keyExtractor={(item, index) => index.toString()}
-                          renderItem={({item}) => <ProductItem navigator={this.props.navigation} product={item}/>}
+                          renderItem={({item}) => <ProductItem
+                              navigator={this.props.navigation}
+                              product={item}/>}
                           refreshControl={
                               <RefreshControl
                                   refreshing={this.state.refreshing}

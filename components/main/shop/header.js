@@ -20,33 +20,37 @@ const styles = StyleSheet.create({
         padding: 10,
         height: height / 8,
         backgroundColor: colors.main,
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
     },
     row1: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         height: height / 20,
-        marginBottom: 10
+        marginBottom: 10,
     },
     textInput: {
         borderRadius: 5,
         height: height / 20,
         backgroundColor: colors.white,
-        padding: 5
+        padding: 5,
     },
     title: {
         color: colors.white,
         fontSize: 25,
         fontWeight: 'bold',
     },
+    menuIcon: {
+        width: height / 22,
+        height: height / 22,
+    },
 });
 
 export default class Header extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            txtSearch: ''
+            txtSearch: '',
         };
     }
 
@@ -54,7 +58,7 @@ export default class Header extends Component {
         Search(this.state.txtSearch).then(arrayProduct => {
             console.log(arrayProduct);
             Global.setSearchArray(arrayProduct);
-        }).catch(err => console.log(err))
+        }).catch(err => console.log(err));
     };
 
     render() {
@@ -62,7 +66,7 @@ export default class Header extends Component {
             <View style={styles.wrapper}>
                 <View style={styles.row1}>
                     <TouchableOpacity onPress={this.props.onOpen}>
-                        <Image source={icMenu}/>
+                        <Image source={icMenu} style={styles.menuIcon}/>
                     </TouchableOpacity>
                     <Text style={styles.title}>SHOPKING</Text>
                     <View/>

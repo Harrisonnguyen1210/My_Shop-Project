@@ -8,6 +8,7 @@ import {
     Dimensions, FlatList,
 } from 'react-native';
 import Global from '../../../global';
+import colors from '../../../../res/colors';
 
 const {width} = Dimensions.get('window');
 const imageWidth = width / 4;
@@ -15,18 +16,19 @@ const imageHeight = (imageWidth * 452) / 361;
 const url = 'http://192.168.0.3/app/images/product';
 const styles = StyleSheet.create({
     wrapper: {
-        backgroundColor: '#F6F6F6',
+        backgroundColor: colors.greyBackground,
         flex: 1,
     },
     product: {
         flexDirection: 'row',
         margin: 10,
         padding: 10,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colors.white,
         borderRadius: 2,
-        shadowColor: '#3B5458',
+        shadowColor: colors.shadow,
         shadowOffset: {width: 0, height: 3},
         shadowOpacity: 0.2,
+        elevation: 5,
     },
     productImage: {
         width: imageWidth,
@@ -48,37 +50,32 @@ const styles = StyleSheet.create({
     },
     txtName: {
         paddingLeft: 20,
-        color: '#A7A7A7',
+        color: colors.greyText,
         fontSize: 20,
         fontWeight: '400',
-        fontFamily: 'Avenir',
     },
     txtPrice: {
         paddingLeft: 20,
-        color: '#C21C70',
+        color: colors.mainText,
         fontSize: 15,
         fontWeight: '400',
-        fontFamily: 'Avenir',
     },
     txtColor: {
         paddingLeft: 20,
-        color: 'black',
+        color: colors.black,
         fontSize: 15,
         fontWeight: '400',
-        fontFamily: 'Avenir',
     },
     txtMaterial: {
         paddingLeft: 20,
-        color: 'black',
+        color: colors.black,
         fontSize: 15,
         fontWeight: '400',
-        fontFamily: 'Avenir',
     },
     txtShowDetail: {
-        color: '#C21C70',
+        color: colors.mainText,
         fontSize: 10,
         fontWeight: '400',
-        fontFamily: 'Avenir',
         textAlign: 'right',
     },
     showDetailContainer: {
@@ -95,7 +92,7 @@ const toTitleCase = (str) => {
 
 export default class SearchView extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             FlatListItems: [],
@@ -123,14 +120,17 @@ export default class SearchView extends Component {
                       keyExtractor={(item, index) => index.toString()}
                       renderItem={({item}) => (
                           <View style={product}>
-                              <Image source={{uri: `${url}/${item.images[0]}`}} style={productImage}/>
+                              <Image source={{uri: `${url}/${item.images[0]}`}}
+                                     style={productImage}/>
                               <View style={mainRight}>
                                   <Text style={txtName}>{toTitleCase(
                                       item.name)}</Text>
                                   <Text style={txtPrice}>{item.price}$</Text>
-                                  <Text style={txtMaterial}>Material {item.material}</Text>
+                                  <Text
+                                      style={txtMaterial}>Material {item.material}</Text>
                                   <View style={{flexDirection: 'row'}}>
-                                      <Text style={txtColor}>Color {item.color}</Text>
+                                      <Text
+                                          style={txtColor}>Color {item.color}</Text>
                                       <View
                                           style={{
                                               height: 15,
@@ -141,8 +141,11 @@ export default class SearchView extends Component {
                                           }}
                                       />
                                   </View>
-                                  <TouchableOpacity style={showDetailContainer} onPress={() => this.goToProductDetail(item)}>
-                                      <Text style={txtShowDetail}>SHOW DETAILS</Text>
+                                  <TouchableOpacity style={showDetailContainer}
+                                                    onPress={() => this.goToProductDetail(
+                                                        item)}>
+                                      <Text style={txtShowDetail}>SHOW
+                                          DETAILS</Text>
                                   </TouchableOpacity>
                               </View>
                           </View>

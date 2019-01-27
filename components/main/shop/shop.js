@@ -71,7 +71,10 @@ export default class Shop extends Component {
         const newCart = this.state.cartArray.map(item => {
             if (item.product.id !== productId) return item;
             else {
-                if (item.quantity <= 0) return {product: item.product, quantity: item.quantity};
+                if (item.quantity <= 0) return {
+                    product: item.product,
+                    quantity: item.quantity,
+                };
                 return {product: item.product, quantity: item.quantity - 1};
             }
         });

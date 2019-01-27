@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
 
 export default class ProductDetail extends Component {
 
+    // func to add product to cart through global.js
     addProductToCart = () => {
         const product = this.props.navigation.getParam('product');
         Global.addProductToCart(product);
@@ -167,7 +168,7 @@ export default class ProductDetail extends Component {
                                     backgroundColor: product.color.toLowerCase(),
                                     borderRadius: 8,
                                     borderWidth: 1,
-                                    borderColor: colors.main
+                                    borderColor: colors.main,
                                 }}/>
                             </View>
                         </View>

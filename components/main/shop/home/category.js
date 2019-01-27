@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     },
     swiperView: {flex: 4},
     titleContainer: {
-        flex: 1, justifyContent: 'center', paddingLeft: 5
+        flex: 1, justifyContent: 'center', paddingLeft: 5,
     },
     title: {fontSize: 20, fontWeight: 'bold', color: colors.black},
     touchableImg: {flex: 1},

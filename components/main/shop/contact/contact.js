@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import React, {Component} from 'react';
+import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
 import phoneIcon from '../../../../media/app_Icon/ic_phone.png';
 import mailIcon from '../../../../media/app_Icon/ic_email.png';
 import messageIcon from '../../../../media/app_Icon/ic_send.png';
 import locationIcon from '../../../../media/app_Icon/ic_location.png';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import colors from '../../../../res/colors';
 
 const styles = StyleSheet.create({
-    wrapper: { flex: 1, backgroundColor: colors.greyBackground },
+    wrapper: {flex: 1, backgroundColor: colors.greyBackground},
     mapContainer: {
         justifyContent: 'center',
         alignItems: 'center',
@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
         margin: 10,
         borderRadius: 2,
         shadowColor: colors.shadow,
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.2
+        shadowOffset: {width: 0, height: 3},
+        shadowOpacity: 0.2,
     },
     infoContainer: {
         padding: 10,
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
         marginTop: 0,
         borderRadius: 2,
         shadowColor: colors.shadow,
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.2
+        shadowOffset: {width: 0, height: 3},
+        shadowOpacity: 0.2,
     },
     rowInfoContainer: {
         flex: 1,
@@ -37,27 +37,27 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         borderBottomWidth: 1,
-        borderColor: colors.greyBackground
+        borderColor: colors.greyBackground,
     },
     imageStyle: {
         width: 30,
-        height: 30
+        height: 30,
     },
     infoText: {
         color: colors.mainText,
-        fontWeight: '500'
+        fontWeight: '500',
     },
     map: {
         flex: 1,
         ...StyleSheet.absoluteFillObject,
-    }
+    },
 });
 
 export default class Contact extends Component {
     render() {
         const {
             mapContainer, wrapper, infoContainer,
-            rowInfoContainer, imageStyle, infoText, map
+            rowInfoContainer, imageStyle, infoText, map,
         } = styles;
         return (
             <View style={wrapper}>
@@ -73,7 +73,7 @@ export default class Contact extends Component {
                         }}
                     >
                         <Marker
-                            coordinate={{latitude: 60.1699, longitude: 24.9384 }}
+                            coordinate={{latitude: 60.1699, longitude: 24.9384}}
                             title='My Shop'
                             description='Welcome to my shop'
                         />
@@ -81,19 +81,19 @@ export default class Contact extends Component {
                 </View>
                 <View style={infoContainer}>
                     <View style={rowInfoContainer}>
-                        <Image source={locationIcon} style={imageStyle} />
+                        <Image source={locationIcon} style={imageStyle}/>
                         <Text style={infoText}>123 Helsinki Finland</Text>
                     </View>
                     <View style={rowInfoContainer}>
-                        <Image source={phoneIcon} style={imageStyle} />
+                        <Image source={phoneIcon} style={imageStyle}/>
                         <Text style={infoText}>(+358) 12345678</Text>
                     </View>
                     <View style={rowInfoContainer}>
-                        <Image source={mailIcon} style={imageStyle} />
+                        <Image source={mailIcon} style={imageStyle}/>
                         <Text style={infoText}>shopking.com</Text>
                     </View>
-                    <View style={[rowInfoContainer, { borderBottomWidth: 0 }]}>
-                        <Image source={messageIcon} style={imageStyle} />
+                    <View style={[rowInfoContainer, {borderBottomWidth: 0}]}>
+                        <Image source={messageIcon} style={imageStyle}/>
                         <Text style={infoText}>(+358) 12345678</Text>
                     </View>
                 </View>
